@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package>
+  <name>carmen_dloop</name>
+  <version>0.0.1</version>
+  <description>
+    carmen dloop detector
+  </description>
+  <author email="b@mpig.com.cn">bob</author>
+  <maintainer email="b@mpig.com.cn">bob</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+</package>

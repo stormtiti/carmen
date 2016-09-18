@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+
+  <node pkg="rosbag" type="play" name="rosbag" args="-d 2 /home/bob/2016-07-08-00-09-55.bag"/>
+
+  <node name="extract1" pkg="image_view" type="extract_images" respawn="false" output="screen" cwd="node">
+
+    <remap from="image" to="/stereo_camera/left/image_raw"/>
+    <param name="filename_format" value="/home/bob/fishbird/data/hall/first/left/image%06i.jpg"/>
+  </node>
+  <node name="extract2" pkg="image_view" type="extract_images" respawn="false" output="screen" cwd="node">
+
+    <remap from="image" to="/stereo_camera/right/image_raw"/>
+    <param name="filename_format" value="/home/bob/fishbird/data/hall/first/right/image%06i.jpg"/>
+  </node>
+
+</launch>

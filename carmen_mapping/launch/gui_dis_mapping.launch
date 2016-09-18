@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<launch>
+    
+    <machine name="hawaii" address="192.168.1.3" env-loader="/opt/ros/jade/env.sh" default="true"/>
+    <machine name="carmen" address="192.168.1.66" user="mpig" password="2" env-loader="/home/mpig/mpig_catkin_ws/devel/env.sh"/>
+
+
+    <!--start carmen driver node -->
+    <node name="carmen_driver" pkg="carmen_driver" type="carmen_driver_node" output="screen" machine="carmen">
+     <!-- <rosparam file="$(find carmen_driver)/config/driver.yaml" command="load" />  -->
+    </node>
+
+    <!-- publise tf transform from base_link to base_laser -->
+    <node name="tf_tranform" pkg="carmen_driver" type="carmen_tf_broadcaster" output="screen" machine="carmen">
+    </node>
+
+    <!--start hokuyo laser scanner node -->
+    <node name="hokuyo" pkg="hokuyo_node" type="hokuyo_node" respawn="false" output="screen" machine="carmen">
+        <!-- Set the port to connect to here -->
+        <param name="port" type="string" value="/dev/ttyACM0"/>
+        <!-- Starts up faster, but timestamps will be inaccurate. --> 
+        <param name="calibrate_time" type="bool" value="false"/>         
+    </node>
+
+
+    <!-- publish the posed fused with pf-->
+    <node name="fused_pose_publisher" pkg="pose_publisher" type="pose_publisher" output="screen" machine="carmen">
+        <param name="publish_frequency" type="double" value="12"/>
+        <param name="map_frame" type="string" value="map" />
+        <param name="base_frame" type="string" value="base_link" />
+        <remap from="pose" to="pose_fused"/>
+    </node>
+
+
+    <!--start gmapping node -->
+    <include file="$(find carmen_mapping)/launch/include/gmapping.launch.xml"/>  
+
+    <!--start keyboard control node -->
+    <include file="$(find carmen_driver)/launch/include/keyboard_tele.launch.xml"/>
+    <include file="$(find carmen_driver)/launch/teleop_joystick.launch" />
+
+    <!-- node pkg="rosbag" type="record" name="rosbag_record_diag" args="-a"/ --> 
+    <!--node pkg="rviz" type="rviz" name="rviz" args="-d $(find carmen_sim)/launch/rviz/mapping.rviz"/-->     
+</launch>

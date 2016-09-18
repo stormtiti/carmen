@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<launch>
+   <machine name="hawaii" address="h" env-loader="/opt/ros/jade/env.sh" default="true" />
+   <!--machine name="carmen" address="mpigsCarmen" user="mpig" password="2" env-loader="/home/mpig/mpig_catkin_ws/devel/env.sh"/-->
+
+   <include file="$(find carmen_sim)/launch/includes/carmen_gazebo.launch.xml" />
+   
+       <!-- Map server -->
+    <arg  name="map_file" default="$(find carmen_sim)/maps/willo.yaml"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
+      <arg name="initial_pose_x" default="0.0"/> <!-- Use 17.0 for willow's map in simulation -->
+      <arg name="initial_pose_y" default="0.0"/> <!-- Use 17.0 for willow's map in simulation -->
+      <arg name="initial_pose_a" default="0.0"/>
+    </node>
+
+  	<include file="$(find carmen_sim)/launch/includes/amcl.launch.xml">
+	    <arg name="initial_pose_x" value="0"/>
+	    <arg name="initial_pose_y" value="0"/>
+	    <arg name="initial_pose_a" value="0"/>
+      <!--arg name="machine_id"     value="hawaii"/ -->
+  	</include>
+
+  	<include file="$(find carmen_sim)/launch/includes/move_base.launch.xml">
+      <!--arg name="machine_id"     value="hawaii"/-->
+    </include>
+
+   	<node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="carmen_sim_teleop"  output="screen" />
+    <include file="$(find carmen_driver)/launch/teleop_joystick.launch" />
+
+   	<node pkg="rviz" type="rviz" name="rviz" args="-d $(find carmen_sim)/launch/rviz/navigation.rviz"/>   
+</launch>

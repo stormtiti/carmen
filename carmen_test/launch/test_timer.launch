@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+   <node pkg="carmen_test" type="test_timer" name="test_timer" respawn="true"/>
+</launch>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+  <!--machine name="hawaii" address="192.168.1.3"   env-loader="/opt/ros/jade/env.sh" default="true"/>
+  <machine name="carmen" address="192.168.1.66"  user="mpig" password="2" env-loader="/home/mpig/mpig_catkin_ws/devel/env.sh"/-->
+
+  <arg name="joy_dev" default="/dev/input/js0" />
+  <arg name="config_filepath" default="$(find carmen_driver)/config/ps3_joystick.yaml" />
+  
+  <!-- node pkg="ps3joy" type="ps3joy.py" name="sony_ps3_joystick_driver"/ -->
+  <node pkg="joy" type="joy_node" name="joy_node">
+    <param name="dev" value="$(arg joy_dev)" />
+    <param name="deadzone" value="0.3" />
+    <param name="autorepeat_rate" value="20" />
+  </node>
+
+  <node pkg="teleop_twist_joy" name="teleop_twist_joy" type="teleop_node">
+    <rosparam command="load" file="$(arg config_filepath)" />
+  </node>
+</launch>

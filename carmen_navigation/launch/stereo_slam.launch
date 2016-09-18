@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <machine name="hawaii" address="192.168.1.100" env-loader="/opt/ros/jade/env.sh" default="true"/>
+  <machine name="carmen" address="192.168.1.66" user="mpig" password="2" env-loader="/home/mpig/mpig_catkin_ws/devel/env.sh"/>
+
+      <arg name="pi/2" value="1.5707963267948966" />
+    <arg name="optical_rotate" value="0 0 0 -$(arg pi/2) 0 -$(arg pi/2)" />
+    <node pkg="tf" type="static_transform_publisher" name="camera_to_base"
+          args="$(arg optical_rotate) base_link stereo_camera 100" machine="carmen"/>  
+  <!--start carmen driver node -->
+  <node name="carmen_driver" pkg="carmen_driver" type="carmen_driver_node" output="screen" machine="carmen">
+   <!-- <rosparam file="$(find carmen_driver)/config/driver.yaml" command="load" />  -->
+  </node>
+
+  <!--Start bumblebee2 driver -->
+      <!-- Publish static transformation between stereo camera and base link -->
+  <!-- /camera_link frame (x-axis right, y-axis down and z-axis forward)
+      but in the /world frame (x-axis forward, y-axis left, z-axis up). 
+      To do that, we use a static_transform_publisher to add a transform between /base_link and /camera_link
+    -->
+    <arg name="dir"  default="file:///home/mpig/mpig_catkin_ws/src/carmen_robot/camera_info"/>    <!-- The directory of carmera parameters     -->
+
+      <!-- call carmera1394 stereo driver -->
+    <node pkg="camera1394stereo" type="camera1394stereo_node" name="camera1394stereo_node" output="screen" machine="carmen">
+      <param name="video_mode" value="format7_mode3" />
+      <param name="format7_color_coding" value="raw16" />
+      <param name="bayer_pattern" value="bggr" />
+      <param name="bayer_method" value="" />
+      <param name="stereo_method" value="Interlaced" />
+      <param name="auto_focus" value="2" />
+      <param name="auto_exposure" value="2" />
+      <param name="camera_info_url_left" value="$(arg dir)/left.yaml" />
+      <param name="camera_info_url_right" value="$(arg dir)/right.yaml" />
+    </node>
+
+  <!-- Run the ROS package stereo_image_proc (throttle to 10 Hz to avoid rectifying all images) -->
+    <group ns="/stereo_camera" >
+
+          <node pkg="stereo_image_proc" type="stereo_image_proc" name="stereo_image_proc" output="screen" machine="carmen">
+              <param name="disparity_range" value="128"/>
+              <!--<param name="queue_size" value="20000" /> -->
+          </node>
+  </group>
+
+
+  <include file="$(find carmen_driver)/launch/include/keyboard_tele.launch.xml"/>
+
+</launch>

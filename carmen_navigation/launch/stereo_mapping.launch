@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Choose visualization -->
+  <arg name="rtabmapviz"              default="false" /> 
+  <arg name="rviz"                    default="false" />
+  <!-- Localization-only mode -->
+  <arg name="localization"            default="false"/>
+  
+  <!-- Corresponding config files -->
+  <arg name="rtabmapviz_cfg"          default="-d $(find carmen_navigation)/launch/config/stereo_gui.ini" />
+  <arg name="rviz_cfg"                default="-d $(find carmen_navigation)/launch/config/stereo.rviz" />
+  
+  <arg name="frame_id"                default="base_link"/>     <!-- Fixed frame id, you may set "base_link" or "base_footprint" if they are published -->
+  <arg name="time_threshold"          default="0"/>             <!-- (ms) If not 0 ms, memory management is used to keep processing time on this fixed limit. -->
+  <arg name="optimize_from_last_node" default="false"/>         <!-- Optimize the map from the last node. Should be true on multi-session mapping and when time threshold is set -->
+  <arg name="database_path"           default="~/.ros/rtabmap.db"/>
+  <arg name="rtabmap_args"            default=""/>              <!-- delete_db_on_start, udebug -->
+  <arg name="launch_prefix"           default=""/>
+  
+  <arg name="stereo_namespace"        default="/stereo_camera"/>
+  <arg name="left_image_topic"        default="$(arg stereo_namespace)/left/image_rect_color" />
+  <arg name="right_image_topic"       default="$(arg stereo_namespace)/right/image_rect_color" />      <!-- using grayscale image for efficiency -->
+  <arg name="left_camera_info_topic"  default="$(arg stereo_namespace)/left/camera_info_throttle" />
+  <arg name="right_camera_info_topic" default="$(arg stereo_namespace)/right/camera_info_throttle" />
+  <arg name="approximate_sync"        default="false"/>         <!-- if timestamps of the stereo images are not synchronized -->
+  <arg name="compressed"              default="false"/>
+  <arg name="convert_depth_to_mm"     default="false"/>
+   
+  <arg name="subscribe_laserScan"          default="true"/>         <!-- Assuming 2D scan if set, rtabmap will do 3DoF mapping instead of 6DoF -->
+  <arg name="scan_topic"              default="/scan"/>
+   
+  <arg name="subscribe_scan_cloud"    default="true"/>         <!-- Assuming 3D scan if set -->
+  <arg name="scan_cloud_topic"        default="/scan_cloud"/>
+  
+  <arg name="visual_odometry"         default="false"/>          <!-- Generate visual odometry -->
+  <arg name="odom_topic"              default="/odom"/>         <!-- Odometry topic used if visual_odometry is false -->
+
+  <arg name="wait_for_transform"      default="0.2"/>
+
+  <arg name="dir"                     default="file:///home/mpig/mpig_catkin_ws/src/carmen_robot/camera_info"/>
+  <arg name="gen_depth"               default="false"    />
+
+  <!--start hokuyo laser scanner node -->
+  <node name="hokuyo" pkg="hokuyo_node" type="hokuyo_node" respawn="false" output="screen">
+      <!-- Set the port to connect to here -->
+      <param name="port" type="string" value="/dev/ttyACM1"/>
+      <!-- Starts up faster, but timestamps will be inaccurate. --> 
+      <param name="calibrate_time" type="bool" value="false"/>         
+  </node>
+
+  <!--start carmen driver node -->
+  <node name="carmen_driver" pkg="carmen_driver" type="carmen_driver_node" output="screen">
+   <!-- <rosparam file="$(find carmen_driver)/config/driver.yaml" command="load" />  -->
+  </node>
+
+
+  <!-- Publish static transformation between stereo camera and base link -->
+  <!-- /camera_link frame (x-axis right, y-axis down and z-axis forward)
+      but in the /world frame (x-axis forward, y-axis left, z-axis up). 
+      To do that, we use a static_transform_publisher to add a transform between /base_link and /camera_link
+    -->
+    <arg name="pi/2" value="1.5707963267948966" />
+    <arg name="optical_rotate" value="0 0 0 -$(arg pi/2) 0 -$(arg pi/2)" />
+    <node pkg="tf" type="static_transform_publisher" name="camera_to_base"
+          args="$(arg optical_rotate) base_link stereo_camera 100" />  
+    <node pkg="tf" type="static_transform_publisher" name="laser_to_base" args="0.0 0.0 0.0 0 0 0.0 base_link laser 100"/>
+
+
+      <!-- call carmera1394 stereo driver -->
+    <node pkg="camera1394stereo" type="camera1394stereo_node" name="camera1394stereo_node" output="screen" >
+      <param name="video_mode" value="format7_mode3" />
+      <param name="format7_color_coding" value="raw16" />
+      <param name="bayer_pattern" value="bggr" />
+      <param name="bayer_method" value="" />
+      <param name="stereo_method" value="Interlaced" />
+      <param name="camera_info_url_left" value="$(arg dir)/stereo_left.yaml" />
+      <param name="camera_info_url_right" value="$(arg dir)/stereo_right.yaml" />
+    </node>
+
+      <!-- Run the ROS package stereo_image_proc (throttle to 10 Hz to avoid rectifying all images) -->
+    <group ns="/stereo_camera" >
+	        <node pkg="nodelet" type="nodelet" name="stereo_throttle" args="standalone rtabmap_ros/stereo_throttle">
+              <remap from="left/image"        to="left/image_raw"/>
+              <remap from="right/image"       to="right/image_raw"/>
+              <remap from="left/camera_info"  to="left/camera_info"/>
+              <remap from="right/camera_info" to="right/camera_info"/>
+
+              <param name="queue_size" type="int" value="10"/>
+              <param name="rate" type="double" value="10"/>
+          </node>
+
+          <node pkg="stereo_image_proc" type="stereo_image_proc" name="stereo_image_proc">
+              <remap from="left/image_raw"    to="left/image_raw_throttle"/>
+              <remap from="left/camera_info"  to="left/camera_info_throttle"/>
+              <remap from="right/image_raw"   to="right/image_raw_throttle"/>
+              <remap from="right/camera_info" to="right/camera_info_throttle"/>
+          </node>
+
+
+      <node if="$(arg gen_depth)" pkg="nodelet" type="nodelet" name="disparity2depth" args="standalone rtabmap_ros/disparity_to_depth"/>
+  </group>
+
+  <!-- rtabmap processing group -->
+  <group ns="/rtabmap">
+  
+    <node if="$(arg compressed)" name="republish_left"  type="republish" pkg="image_transport" args="compressed in:=$(arg left_image_topic) raw out:=$(arg left_image_topic)" />
+    <node if="$(arg compressed)" name="republish_right" type="republish" pkg="image_transport" args="compressed in:=$(arg right_image_topic) raw out:=$(arg right_image_topic)" />
+  
+    <!-- Odometry -->
+    <node if="$(arg visual_odometry)" pkg="rtabmap_ros" type="stereo_odometry" name="stereo_odometry" output="screen" args="$(arg rtabmap_args)" launch-prefix="$(arg launch_prefix)">
+      <remap from="left/image_rect"        to="$(arg left_image_topic)"/>
+      <remap from="right/image_rect"       to="$(arg right_image_topic)"/>
+      <remap from="left/camera_info"       to="$(arg left_camera_info_topic)"/>
+      <remap from="right/camera_info"      to="$(arg right_camera_info_topic)"/>
+      <param name="frame_id"                type="string" value="$(arg frame_id)"/>
+      <param name="odom_frame_id"           type="string" value="odom"/>
+      <param name="wait_for_transform_duration"       type="double"   value="$(arg wait_for_transform)"/>
+      <param name="approx_sync"              type="bool"   value="$(arg approximate_sync)"/>
+    
+      <param name="Odom/FillInfoData"        type="string" value="true"/> 
+    </node>
+  
+    <!-- Visual SLAM (robot side) -->
+    <!-- args: "delete_db_on_start" and "udebug" -->
+    <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="$(arg rtabmap_args)" launch-prefix="$(arg launch_prefix)">
+      <param name="subscribe_depth"              type="bool"   value="false"/>
+      <param name="subscribe_stereo"             type="bool"   value="true"/>
+      <param name="subscribe_laserScan"          type="bool"   value="true"/>
+      <param name="subscribe_scan_cloud"         type="bool"   value="$(arg subscribe_scan_cloud)"/>
+      <param name="frame_id"                     type="string" value="$(arg frame_id)"/>
+      <param name="wait_for_transform_duration"  type="double"   value="$(arg wait_for_transform)"/>
+      <param name="database_path"                type="string" value="$(arg database_path)"/>
+      <param name="stereo_approx_sync"           type="bool"   value="$(arg approximate_sync)"/>
+  
+      <remap from="left/image_rect"        to="$(arg left_image_topic)"/>
+      <remap from="right/image_rect"       to="$(arg right_image_topic)"/>
+      <remap from="left/camera_info"       to="$(arg left_camera_info_topic)"/>
+      <remap from="right/camera_info"      to="$(arg right_camera_info_topic)"/>
+      <remap from="scan"                   to="/scan"/>
+      <remap from="odom"                   to="/stereo_camera/odom"/>
+      <remap from="scan_cloud"      to="$(arg scan_cloud_topic)"/>
+      <remap unless="$(arg visual_odometry)" from="odom"  to="$(arg odom_topic)"/>
+      
+      <param name="publish_tf"                    type="string" value="true" />
+      <param name="Rtabmap/TimeThr"              type="string" value="$(arg time_threshold)"/>
+      <param name="RGBD/OptimizeFromGraphEnd"    type="string" value="$(arg optimize_from_last_node)"/>
+      <param name="Mem/SaveDepth16Format"        type="string" value="$(arg convert_depth_to_mm)"/>
+      
+      <!-- localization mode -->
+    <param     if="$(arg localization)" name="Mem/IncrementalMemory" type="string" value="false"/>
+    <param unless="$(arg localization)" name="Mem/IncrementalMemory" type="string" value="true"/>
+    <param name="Mem/InitWMWithAllNodes" type="string" value="$(arg localization)"/>
+
+      <!-- when 2D scan is set -->
+      <param if="$(arg subscribe_laserScan)" name="Optimizer/Slam2D"        type="string" value="true"/>
+    <param if="$(arg subscribe_laserScan)" name="Icp/CorrespondenceRatio" type="string" value="0.25"/>
+    <param if="$(arg subscribe_laserScan)" name="Reg/Strategy"            type="string" value="1"/> 
+    <param if="$(arg subscribe_laserScan)" name="Reg/Force3DoF"           type="string" value="true"/>
+
+    <!-- when 3D scan is set -->
+    <param if="$(arg subscribe_scan_cloud)" name="Reg/Strategy"      type="string" value="1"/>
+    </node>
+ 
+    <!-- Visualisation RTAB-Map -->
+    <node if="$(arg rtabmapviz)" pkg="rtabmap_ros" type="rtabmapviz" name="rtabmapviz" args="$(arg rtabmapviz_cfg)" output="screen" launch-prefix="$(arg launch_prefix)">
+      <param name="subscribe_depth"           type="bool"   value="false"/>
+      <param name="subscribe_stereo"          type="bool"   value="true"/>
+      <param name="subscribe_scan"            type="bool"   value="$(arg subscribe_scan)"/>
+      <param name="subscribe_scan_cloud"      type="bool"   value="$(arg subscribe_scan_cloud)"/>
+      <param name="subscribe_odom_info"       type="bool"   value="$(arg visual_odometry)"/>
+      <param name="frame_id"                  type="string" value="$(arg frame_id)"/>
+      <param name="wait_for_transform_duration"   type="double"   value="$(arg wait_for_transform)"/>
+    
+      <remap from="left/image_rect"        to="$(arg left_image_topic)"/>
+      <remap from="right/image_rect"       to="$(arg right_image_topic)"/>
+      <remap from="left/camera_info"       to="$(arg left_camera_info_topic)"/>
+      <remap from="right/camera_info"      to="$(arg right_camera_info_topic)"/>
+      <remap from="scan"                   to="$(arg scan_topic)"/>
+      <remap from="scan_cloud"             to="$(arg scan_cloud_topic)"/>
+      <remap unless="$(arg visual_odometry)" from="odom"  to="$(arg odom_topic)"/>
+    </node>
+  
+  </group>
+  
+  <!-- Visualization RVIZ -->
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" args="$(arg rviz_cfg)"/>
+  <node if="$(arg rviz)" pkg="nodelet" type="nodelet" name="points_xyzrgb" args="standalone rtabmap_ros/point_cloud_xyzrgb">
+    <remap from="left/image"        to="$(arg left_image_topic)"/>
+    <remap from="right/image"       to="$(arg right_image_topic)"/>
+    <remap from="left/camera_info"  to="$(arg left_camera_info_topic)"/>
+    <remap from="right/camera_info" to="$(arg right_camera_info_topic)"/>
+    <remap from="cloud"             to="voxel_cloud" />
+
+    <param name="decimation"  type="double" value="2"/>
+    <param name="voxel_size"  type="double" value="0.02"/>
+    <param name="approx_sync" type="bool"   value="$(arg approximate_sync)"/>
+  </node>
+
+
+    <!--start keyboard control node -->
+    <include file="$(find carmen_driver)/launch/include/keyboard_tele.launch.xml"/>
+
+</launch>

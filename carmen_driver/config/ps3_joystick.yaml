@@ -1,0 +1,16 @@
+# Joystick axis to use for linear movement control (int, default: 1)
+axis_linear: 3 
+# Scale to apply to joystick linear axis for regular-speed movement, in m/s (double, default: 0.5)
+scale_linear: 0.25
+# Scale to apply to joystick linear axis for high-speed movement, in m/s (double, default: 1.0)
+scale_linear_turbo: 1.0
+
+# Joystick axis to use for angular movement control (int, default: 0)
+axis_angular: 2
+# Scale to apply to joystick angular axis, in rad/s (double, default: 1.0)
+scale_angular: 0.4
+
+# Joystick button to enable regular-speed movement (int, default: 0)
+enable_button: 8  # L2 shoulder button
+# Joystick button to enable high-speed movement (disabled when -1).
+enable_turbo_button: 10  # L1 shoulder button

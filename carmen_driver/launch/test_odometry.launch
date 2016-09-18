@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+    <!--start carmen driver node -->
+    <node name="carmen_driver" pkg="carmen_driver" type="carmen_driver_node" output="screen">
+     <!-- <rosparam file="$(find carmen_driver)/config/driver.yaml" command="load" />  -->
+    </node>
+
+   
+    <!--start keyboard control node -->
+    <include file="$(find carmen_driver)/launch/include/keyboard_tele.launch.xml"/> 
+
+     <node pkg="rosbag" type="record" name="rosbag_record_diag" args="-a"/>   
+</launch>

@@ -1,0 +1,237 @@
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+BUFFER_SIZE	include/GlobalDef.h	/^const UInt32 BUFFER_SIZE = 256;$/;"	v
+Bool	include/GlobalDef.h	/^typedef bool               Bool;$/;"	t
+CARMEN_THROW	include/GlobalDef.h	86;"	d
+CARMEN_THROW_MSG	include/GlobalDef.h	89;"	d
+CARMEN_THROW_MSG_AND_ID	include/GlobalDef.h	91;"	d
+CHECK_CMD_LENGTH	include/GlobalDef.h	40;"	d
+CMD_FRAMEEND1	include/GlobalDef.h	26;"	d
+CMD_FRAMEEND2	include/GlobalDef.h	27;"	d
+CMD_FRAMEHEAD1	include/GlobalDef.h	24;"	d
+CMD_FRAMEHEAD2	include/GlobalDef.h	25;"	d
+DA_CMD_LENGTH	include/GlobalDef.h	43;"	d
+DEFINE_EXCEPTION	include/GlobalDef.h	67;"	d
+DIAMETER	include/GlobalDef.h	/^const Float32 DIAMETER = 0.194f;$/;"	v
+DISABLE_MOTION_CMD_LENGTH	include/GlobalDef.h	44;"	d
+DI_CMD_LENGTH	include/GlobalDef.h	41;"	d
+DO_CMD_LENGTH	include/GlobalDef.h	42;"	d
+ENCODER_CMD_LENGTH	include/GlobalDef.h	39;"	d
+Float32	include/GlobalDef.h	/^typedef float              Float32;$/;"	t
+Float64	include/GlobalDef.h	/^typedef double             Float64;$/;"	t
+LOG	include/GlobalDef.h	100;"	d
+MINIMIZE_BUFFER_NUM	include/GlobalDef.h	57;"	d
+MOTION_CMD_LENGTH	include/GlobalDef.h	36;"	d
+PI	include/GlobalDef.h	/^const Float32 PI = 3.1415926f;$/;"	v
+PSD_CMD_LENGTH	include/GlobalDef.h	38;"	d
+RES_FRAMEEND1	include/GlobalDef.h	31;"	d
+RES_FRAMEEND2	include/GlobalDef.h	32;"	d
+RES_FRAMEHEAD1	include/GlobalDef.h	29;"	d
+RES_FRAMEHEAD2	include/GlobalDef.h	30;"	d
+SInt16	include/GlobalDef.h	/^typedef short int          SInt16;$/;"	t
+SInt32	include/GlobalDef.h	/^typedef int                SInt32;$/;"	t
+SONAR_CMD_LENGTH	include/GlobalDef.h	37;"	d
+UInt16	include/GlobalDef.h	/^typedef unsigned short int UInt16;$/;"	t
+UInt32	include/GlobalDef.h	/^typedef unsigned int       UInt32;$/;"	t
+UInt8	include/GlobalDef.h	/^typedef unsigned char      UInt8;$/;"	t
+_GLOBAL_DEF_H_	include/GlobalDef.h	2;"	d
+CHECK	include/Motion.h	/^	        CHECK  = 0x11,        \/\/ self check $/;"	e	enum:carmen::ProtocolHeader::__anon1
+COOPERATE	include/Motion.h	/^		COOPERATE = 0x04,\/**< fixme why*\/$/;"	e	enum:carmen::__anon3
+DA	include/Motion.h	/^			DA     = 0x0B,$/;"	e	enum:carmen::ProtocolHeader::__anon1
+DA_NUM	include/Motion.h	/^	enum { DA_NUM = 6 };$/;"	e	enum:carmen::Motion::__anon11
+DEBUG	include/Motion.h	14;"	d
+DEFAULT	include/Motion.h	/^		DEFAULT = 0x01,	\/**< default PID *\/$/;"	e	enum:carmen::__anon4
+DI	include/Motion.h	/^			DI     = 0x07,$/;"	e	enum:carmen::ProtocolHeader::__anon1
+DISABLE	include/Motion.h	/^			DISABLE = 0x00 $/;"	e	enum:carmen::ProtocolHeader::__anon2
+DI_BITS	include/Motion.h	/^	enum { DI_BITS = 16 };$/;"	e	enum:carmen::Motion::__anon9
+DO	include/Motion.h	/^			DO     = 0x09,$/;"	e	enum:carmen::ProtocolHeader::__anon1
+DO_BITS	include/Motion.h	/^	enum { DO_BITS = 16 };$/;"	e	enum:carmen::Motion::__anon10
+DRIVE_MODE	include/Motion.h	/^	}DRIVE_MODE;$/;"	t	namespace:carmen	typeref:enum:carmen::__anon3
+ENABLE	include/Motion.h	/^			ENABLE  = 0x01,$/;"	e	enum:carmen::ProtocolHeader::__anon2
+ENABLE_TOGGLE	include/Motion.h	/^		}ENABLE_TOGGLE;$/;"	t	struct:carmen::ProtocolHeader	typeref:enum:carmen::ProtocolHeader::__anon2
+ENCODERDIS	include/Motion.h	/^			ENCODERDIS = 0x17    \/\/ relative encoder value$/;"	e	enum:carmen::ProtocolHeader::__anon1
+ENCODER_NUM	include/Motion.h	/^	enum { ENCODER_NUM = 2};$/;"	e	enum:carmen::Motion::__anon8
+EncoderAbsProc	include/Motion.h	/^typedef boost::function<void(void*, Float32*, Float32*, Float32*, Float32*, Float32)> EncoderAbsProc;$/;"	t	namespace:carmen
+EncoderProc	include/Motion.h	/^typedef boost::function<void(void*, Float32 value[])> EncoderProc;$/;"	t	namespace:carmen
+ExceptionCallback	include/Motion.h	/^typedef boost::function<void(const std::exception&)> ExceptionCallback;$/;"	t	namespace:carmen
+LOAD	include/Motion.h	/^		LOAD = 0x04		\/**< load PID *\/$/;"	e	enum:carmen::__anon4
+LogMsgCallback	include/Motion.h	/^typedef boost::function<void(const std::string&)> LogMsgCallback;$/;"	t	namespace:carmen
+MOTION	include/Motion.h	/^			MOTION = 0x01,$/;"	e	enum:carmen::ProtocolHeader::__anon1
+Motion	include/Motion.h	/^class Motion$/;"	c	namespace:carmen
+MotionProc	include/Motion.h	/^typedef boost::function<void(void*, UInt8,UInt8,UInt8,UInt8,UInt8,UInt8)> MotionProc;$/;"	t	namespace:carmen
+ONLINE	include/Motion.h	/^		ONLINE = 0x02,	\/**< online debug PID *\/$/;"	e	enum:carmen::__anon4
+PID_MODE	include/Motion.h	/^	}PID_MODE;$/;"	t	namespace:carmen	typeref:enum:carmen::__anon4
+POS	include/Motion.h	/^		POS = 0x02,	\/**< distance closure mode*\/$/;"	e	enum:carmen::__anon3
+PSD	include/Motion.h	/^			PSD    = 0x05,$/;"	e	enum:carmen::ProtocolHeader::__anon1
+PSD_NUM	include/Motion.h	/^	enum { PSD_NUM = 16 };$/;"	e	enum:carmen::Motion::__anon7
+ProtocolHeader	include/Motion.h	/^	struct ProtocolHeader$/;"	s	namespace:carmen
+PsdProc	include/Motion.h	/^typedef boost::function<void(void*, Float32*, SInt32)> PsdProc;$/;"	t	namespace:carmen
+SAVEPID	include/Motion.h	/^		SAVEPID = 0x08	\/**< save PID mode*\/$/;"	e	enum:carmen::__anon3
+SERIAL_INFO	include/Motion.h	/^	}SERIAL_INFO;$/;"	t	namespace:carmen	typeref:struct:carmen::__anon5
+SONAR	include/Motion.h	/^			SONAR  = 0x03,$/;"	e	enum:carmen::ProtocolHeader::__anon1
+SONAR_NUM	include/Motion.h	/^	enum { SONAR_NUM = 16 };$/;"	e	enum:carmen::Motion::__anon6
+SelfCheckProc	include/Motion.h	/^typedef boost::function<void(void*, UInt8, UInt16, UInt8)> SelfCheckProc;$/;"	t	namespace:carmen
+SonarProc	include/Motion.h	/^typedef boost::function<void(void*, Float32*, SInt32)> SonarProc;$/;"	t	namespace:carmen
+VEL	include/Motion.h	/^		VEL = 0x01,	\/**< speed closure mode*\/$/;"	e	enum:carmen::__anon3
+_MOTION_H_	include/Motion.h	2;"	d
+baudrate	include/Motion.h	/^		UInt32      baudrate;\/**<  the baudrate of serial port *\/$/;"	m	struct:carmen::__anon5
+bytes	include/Motion.h	/^		UInt8 bytes;$/;"	m	struct:carmen::ProtocolHeader
+carmen	include/Motion.h	/^namespace carmen $/;"	n
+continuously_reading_	include/Motion.h	/^  	bool continuously_reading_;    \/**< The flag indicatinig whether read or not *\/$/;"	m	class:carmen::Motion
+debug_	include/Motion.h	/^	LogMsgCallback debug_, info_, error_;$/;"	m	class:carmen::Motion
+error_	include/Motion.h	/^	LogMsgCallback debug_, info_, error_;$/;"	m	class:carmen::Motion
+handle_exception_	include/Motion.h	/^	ExceptionCallback handle_exception_;$/;"	m	class:carmen::Motion
+info_	include/Motion.h	/^	LogMsgCallback debug_, info_, error_;$/;"	m	class:carmen::Motion
+m_CheckProc	include/Motion.h	/^	SelfCheckProc  m_CheckProc;$/;"	m	class:carmen::Motion
+m_ConnectStatus	include/Motion.h	/^	bool m_ConnectStatus;     \/\/ connect flag of serial port$/;"	m	class:carmen::Motion
+m_EnabledIDStatus	include/Motion.h	/^	std::vector<char> m_EnabledIDStatus;   \/\/ store the device ID enabled$/;"	m	class:carmen::Motion
+m_EncoderAbsProc	include/Motion.h	/^	EncoderAbsProc m_EncoderAbsProc;$/;"	m	class:carmen::Motion
+m_EncoderProc	include/Motion.h	/^	EncoderProc m_EncoderProc;$/;"	m	class:carmen::Motion
+m_MotionProc	include/Motion.h	/^	MotionProc m_MotionProc;$/;"	m	class:carmen::Motion
+m_PsdProc	include/Motion.h	/^	PsdProc    m_PsdProc;$/;"	m	class:carmen::Motion
+m_SonarProc	include/Motion.h	/^	SonarProc  m_SonarProc;$/;"	m	class:carmen::Motion
+m_pCheckParam	include/Motion.h	/^	void* m_pCheckParam;$/;"	m	class:carmen::Motion
+m_pEncoderAbsParam	include/Motion.h	/^	void* m_pEncoderAbsParam;$/;"	m	class:carmen::Motion
+m_pEncoderParam	include/Motion.h	/^	void*      m_pEncoderParam;$/;"	m	class:carmen::Motion
+m_pMotionParam	include/Motion.h	/^	void* m_pMotionParam;$/;"	m	class:carmen::Motion
+m_pPsdParam	include/Motion.h	/^	void*      m_pPsdParam;$/;"	m	class:carmen::Motion
+m_pSonarParam	include/Motion.h	/^	void*   m_pSonarParam;$/;"	m	class:carmen::Motion
+m_serialEngine	include/Motion.h	/^	carmen::CarmenDriver *m_serialEngine;$/;"	m	class:carmen::Motion
+port	include/Motion.h	/^		std::string port; \/**< the serial port address like 'COM1' on Windows and '\/dev\/ttyS1' on Linux.*\/$/;"	m	struct:carmen::__anon5
+read_thread_	include/Motion.h	/^  	boost::thread read_thread_;    \/**< The boost thread handle *\/$/;"	m	class:carmen::Motion
+s_instance	include/Motion.h	/^	static Motion* s_instance;$/;"	m	class:carmen::Motion
+CarmenDriver	include/carmen_driver.h	/^class CarmenDriver {$/;"	c	namespace:carmen
+Packet	include/carmen_driver.h	/^        typedef std::vector<unsigned char> Packet;$/;"	t	namespace:carmen
+_CARMEN_DRIVER_H_	include/carmen_driver.h	21;"	d
+_mconfigured	include/carmen_driver.h	/^    bool _mconfigured;$/;"	m	class:carmen::CarmenDriver
+cancel	include/carmen_driver.h	/^    void cancel() {this->m_canceled = true;}$/;"	f	class:carmen::CarmenDriver
+carmen	include/carmen_driver.h	/^namespace carmen $/;"	n
+isConnected	include/carmen_driver.h	/^    bool isConnected() {return this->m_connected;}$/;"	f	class:carmen::CarmenDriver
+m_baudrate	include/carmen_driver.h	/^    int m_baudrate;$/;"	m	class:carmen::CarmenDriver
+m_canceled	include/carmen_driver.h	/^    bool m_canceled;$/;"	m	class:carmen::CarmenDriver
+m_configured	include/carmen_driver.h	/^    bool m_configured;$/;"	m	class:carmen::CarmenDriver
+m_connected	include/carmen_driver.h	/^    bool m_connected;    $/;"	m	class:carmen::CarmenDriver
+m_dataBuffer	include/carmen_driver.h	/^    std::vector<unsigned char> m_dataBuffer;   \/**< the data buffer*\/$/;"	m	class:carmen::CarmenDriver
+m_port	include/carmen_driver.h	/^    std::string m_port;$/;"	m	class:carmen::CarmenDriver
+m_serial	include/carmen_driver.h	/^    serial::Serial m_serial;                 \/**< the serial engine*\/$/;"	m	class:carmen::CarmenDriver
+AuthenticatePacket	src/Motion.cpp	/^bool Motion::AuthenticatePacket(const Packet& packet)$/;"	f	class:Motion
+Cleanup	src/Motion.cpp	/^void Motion::Cleanup()$/;"	f	class:Motion
+CreateInstance	src/Motion.cpp	/^void Motion::CreateInstance()$/;"	f	class:Motion
+DeleteInstance	src/Motion.cpp	/^void Motion::DeleteInstance()$/;"	f	class:Motion
+DisableMotion	src/Motion.cpp	/^void Motion::DisableMotion()$/;"	f	class:Motion
+Drive	src/Motion.cpp	/^void Motion::Drive(SInt16 ModeSelect, SInt16 PidSelect,$/;"	f	class:Motion
+End	src/Motion.cpp	/^void Motion::End()$/;"	f	class:Motion
+GetDI	src/Motion.cpp	/^void Motion::GetDI(  UInt16 channel, bool enable )$/;"	f	class:Motion
+GetEncoderIncre	src/Motion.cpp	/^void Motion::GetEncoderIncre()$/;"	f	class:Motion
+GetInstance	src/Motion.cpp	/^Motion* Motion::GetInstance()$/;"	f	class:Motion
+GetMotion	src/Motion.cpp	/^void Motion::GetMotion(UInt16 mode, bool enable)$/;"	f	class:Motion
+GetPsd	src/Motion.cpp	/^void Motion::GetPsd(UInt16  channel, bool enable)$/;"	f	class:Motion
+GetSonar	src/Motion.cpp	/^void Motion::GetSonar( UInt16  channel, bool enable )$/;"	f	class:Motion
+Init	src/Motion.cpp	/^void Motion::Init(const carmen::SERIAL_INFO& desc)$/;"	f	class:Motion
+KickoffReading	src/Motion.cpp	/^void Motion::KickoffReading()$/;"	f	class:Motion
+Motion	src/Motion.cpp	/^Motion::Motion(void) $/;"	f	class:Motion
+ParsePacket_	src/Motion.cpp	/^bool Motion::ParsePacket_(const Packet& packet)$/;"	f	class:Motion
+ProcessPacket_	src/Motion.cpp	/^bool Motion::ProcessPacket_(Packet &packet)$/;"	f	class:Motion
+ReadContinuously_	src/Motion.cpp	/^void Motion::ReadContinuously_() $/;"	f	class:Motion
+SelfCheck	src/Motion.cpp	/^void Motion::SelfCheck(bool enable)$/;"	f	class:Motion
+SetCheckProc	src/Motion.cpp	/^void Motion::SetCheckProc(SelfCheckProc proc, void* pParam)$/;"	f	class:Motion
+SetDA	src/Motion.cpp	/^void Motion::SetDA( UInt8 channel ,UInt8 value,bool enable)$/;"	f	class:Motion
+SetDO	src/Motion.cpp	/^void Motion::SetDO( UInt16 channel ,bool enable)$/;"	f	class:Motion
+SetEncoderAbsProc	src/Motion.cpp	/^void Motion::SetEncoderAbsProc(EncoderAbsProc proc,void* pParam)$/;"	f	class:Motion
+SetEncoderProc	src/Motion.cpp	/^void Motion::SetEncoderProc(EncoderProc proc, void* pParam)$/;"	f	class:Motion
+SetMotionProc	src/Motion.cpp	/^void Motion::SetMotionProc(MotionProc proc,void* pParam)$/;"	f	class:Motion
+SetPsdProc	src/Motion.cpp	/^void Motion::SetPsdProc(PsdProc proc, void* pParam)$/;"	f	class:Motion
+SetSonarProc	src/Motion.cpp	/^void Motion::SetSonarProc(SonarProc proc, void* pParam)$/;"	f	class:Motion
+StartReadingContinuously_	src/Motion.cpp	/^void Motion::StartReadingContinuously_() {$/;"	f	class:Motion
+StopReadingContinuously_	src/Motion.cpp	/^void Motion::StopReadingContinuously_()$/;"	f	class:Motion
+Time2Distance	src/Motion.cpp	/^Float32 Motion::Time2Distance( UInt16 timer )$/;"	f	class:Motion
+Voltage2Distance	src/Motion.cpp	/^Float32 Motion::Voltage2Distance(UInt16 voltage)$/;"	f	class:Motion
+connect	src/Motion.cpp	/^bool Motion::connect()$/;"	f	class:Motion
+defaultDebugMsgCallback	src/Motion.cpp	/^inline void defaultDebugMsgCallback(const std::string &msg)$/;"	f
+defaultErrorMsgCallback	src/Motion.cpp	/^inline void defaultErrorMsgCallback(const std::string &msg)$/;"	f
+defaultExceptionCallback	src/Motion.cpp	/^inline void defaultExceptionCallback(const std::exception &error)$/;"	f
+defaultInfoMsgCallback	src/Motion.cpp	/^inline void defaultInfoMsgCallback(const std::string &msg)$/;"	f
+sendCleanup_	src/Motion.cpp	/^void Motion::sendCleanup_(char mode)$/;"	f	class:Motion
+~Motion	src/Motion.cpp	/^Motion::~Motion(void)$/;"	f	class:Motion
+BuildPacket	src/carmen_driver.cpp	/^bool CarmenDriver::BuildPacket(Packet &packet) {$/;"	f	class:CarmenDriver
+CarmenDriver	src/carmen_driver.cpp	/^CarmenDriver::CarmenDriver() : m_configured(false), m_baudrate(19200), m_port("\/dev\/ttyS1") $/;"	f	class:CarmenDriver
+configure	src/carmen_driver.cpp	/^void CarmenDriver::configure(std::string port, int baudrate)$/;"	f	class:CarmenDriver
+connect	src/carmen_driver.cpp	/^void CarmenDriver::connect()$/;"	f	class:CarmenDriver
+disconnect	src/carmen_driver.cpp	/^void CarmenDriver::disconnect() $/;"	f	class:CarmenDriver
+fillBuffer	src/carmen_driver.cpp	/^void CarmenDriver::fillBuffer() {$/;"	f	class:CarmenDriver
+printHex	src/carmen_driver.cpp	/^inline void printHex(char *data, int length)$/;"	f
+printHexFromString	src/carmen_driver.cpp	/^inline void printHexFromString(std::string str)$/;"	f
+read	src/carmen_driver.cpp	/^int CarmenDriver::read(unsigned char* buffer, int size) $/;"	f	class:CarmenDriver
+write	src/carmen_driver.cpp	/^int CarmenDriver::write(unsigned char* buffer, int size) $/;"	f	class:CarmenDriver
+~CarmenDriver	src/carmen_driver.cpp	/^CarmenDriver::~CarmenDriver()$/;"	f	class:CarmenDriver
+B	src/carmen_driver_node.cpp	/^const Float32 B = 0.401;                 \/\/ base line distance (m)$/;"	v
+CarmenNode	src/carmen_driver_node.cpp	/^		CarmenNode() $/;"	f	class:CarmenNode
+CarmenNode	src/carmen_driver_node.cpp	/^class CarmenNode$/;"	c	file:
+CmdVelToSpeed	src/carmen_driver_node.cpp	/^  		void CmdVelToSpeed(const geometry_msgs::Twist& cmd_vel, Float32& lv,Float32& rv)$/;"	f	class:CarmenNode	file:
+ConfigureMotionCallback	src/carmen_driver_node.cpp	/^  		void ConfigureMotionCallback()$/;"	f	class:CarmenNode
+ConfigureROSPublisher	src/carmen_driver_node.cpp	/^  		void ConfigureROSPublisher() $/;"	f	class:CarmenNode
+FillRosOdoMSG	src/carmen_driver_node.cpp	/^  		void FillRosOdoMSG(Float32 vx_, Float32 vy_, Float32 vth_)$/;"	f	class:CarmenNode	file:
+FillRosOdoPoseMSG	src/carmen_driver_node.cpp	/^      void FillRosOdoPoseMSG( )$/;"	f	class:CarmenNode	file:
+GetROSParameters	src/carmen_driver_node.cpp	/^		void GetROSParameters() $/;"	f	class:CarmenNode
+MoveCarmen	src/carmen_driver_node.cpp	/^  		void MoveCarmen(Float32 lv, Float32 rv)$/;"	f	class:CarmenNode	file:
+Setup	src/carmen_driver_node.cpp	/^  		void Setup()$/;"	f	class:CarmenNode
+SpeedToOdometry	src/carmen_driver_node.cpp	/^  		void SpeedToOdometry(Float32 lv, Float32 rv, Float32& vx, Float32& vy, Float32& vth, Float32 ls, Float32 rs, Float32 t)$/;"	f	class:CarmenNode	file:
+TH	src/carmen_driver_node.cpp	/^		Float32 X, Y, TH;   \/\/ position and orientation$/;"	m	class:CarmenNode	file:
+X	src/carmen_driver_node.cpp	/^		Float32 X, Y, TH;   \/\/ position and orientation$/;"	m	class:CarmenNode	file:
+Y	src/carmen_driver_node.cpp	/^		Float32 X, Y, TH;   \/\/ position and orientation$/;"	m	class:CarmenNode	file:
+handle_MotionCallback	src/carmen_driver_node.cpp	/^		 void handle_MotionCallback(void* par, Float32* lv, Float32* rv, Float32* ls, Float32* rs, Float32 t)$/;"	f	class:CarmenNode
+handle_PsdCallback	src/carmen_driver_node.cpp	/^		void handle_PsdCallback()$/;"	f	class:CarmenNode
+handle_SonarCallback	src/carmen_driver_node.cpp	/^		void handle_SonarCallback()$/;"	f	class:CarmenNode
+handle_cmdVelCallback	src/carmen_driver_node.cpp	/^		void handle_cmdVelCallback(const geometry_msgs::Twist& cmd_vel)$/;"	f	class:CarmenNode
+m_MotionDriver	src/carmen_driver_node.cpp	/^		Motion m_MotionDriver;$/;"	m	class:CarmenNode	file:
+m_OdomPoseMsg	src/carmen_driver_node.cpp	/^    geometry_msgs::PoseStamped m_OdomPoseMsg;$/;"	m	class:CarmenNode	file:
+m_OdomTransMsg	src/carmen_driver_node.cpp	/^  	geometry_msgs::TransformStamped m_OdomTransMsg;$/;"	m	class:CarmenNode	file:
+m_OdometryMsg	src/carmen_driver_node.cpp	/^  	nav_msgs::Odometry m_OdometryMsg;$/;"	m	class:CarmenNode	file:
+m_baudrate	src/carmen_driver_node.cpp	/^  	int m_baudrate;$/;"	m	class:CarmenNode	file:
+m_d	src/carmen_driver_node.cpp	/^  	int m_p, m_i, m_d;$/;"	m	class:CarmenNode	file:
+m_enableFlag	src/carmen_driver_node.cpp	/^  	bool m_enableFlag;$/;"	m	class:CarmenNode	file:
+m_encoderMode	src/carmen_driver_node.cpp	/^  	int m_encoderMode;$/;"	m	class:CarmenNode	file:
+m_i	src/carmen_driver_node.cpp	/^  	int m_p, m_i, m_d;$/;"	m	class:CarmenNode	file:
+m_leftAcc	src/carmen_driver_node.cpp	/^  	Float32 m_leftAcc;$/;"	m	class:CarmenNode	file:
+m_leftDis	src/carmen_driver_node.cpp	/^  	Float32 m_leftDis;$/;"	m	class:CarmenNode	file:
+m_leftVel	src/carmen_driver_node.cpp	/^		Float32 m_leftVel;$/;"	m	class:CarmenNode	file:
+m_mode	src/carmen_driver_node.cpp	/^		UInt16 m_mode; \/\/ mode for getting encoder value or not : 1: encoder$/;"	m	class:CarmenNode	file:
+m_moveMode	src/carmen_driver_node.cpp	/^		int m_moveMode;$/;"	m	class:CarmenNode	file:
+m_nhROS	src/carmen_driver_node.cpp	/^		ros::NodeHandle m_nhROS;$/;"	m	class:CarmenNode	file:
+m_odomBroadcaster	src/carmen_driver_node.cpp	/^  	tf::TransformBroadcaster m_odomBroadcaster; $/;"	m	class:CarmenNode	file:
+m_p	src/carmen_driver_node.cpp	/^  	int m_p, m_i, m_d;$/;"	m	class:CarmenNode	file:
+m_pidMode	src/carmen_driver_node.cpp	/^    int m_pidMode;$/;"	m	class:CarmenNode	file:
+m_port	src/carmen_driver_node.cpp	/^		std::string m_port;$/;"	m	class:CarmenNode	file:
+m_pubEncoder	src/carmen_driver_node.cpp	/^ 	 	ros::Publisher m_pubEncoder;$/;"	m	class:CarmenNode	file:
+m_pubOdomPose	src/carmen_driver_node.cpp	/^    ros::Publisher m_pubOdomPose; \/\/ Publisher for pose based on raw odometry$/;"	m	class:CarmenNode	file:
+m_pubPSD	src/carmen_driver_node.cpp	/^  	ros::Publisher m_pubPSD; $/;"	m	class:CarmenNode	file:
+m_pubSonar	src/carmen_driver_node.cpp	/^  	ros::Publisher m_pubSonar;$/;"	m	class:CarmenNode	file:
+m_rightAcc	src/carmen_driver_node.cpp	/^  	Float32 m_rightAcc;$/;"	m	class:CarmenNode	file:
+m_rightDis	src/carmen_driver_node.cpp	/^  	Float32 m_rightDis;$/;"	m	class:CarmenNode	file:
+m_rightVel	src/carmen_driver_node.cpp	/^  	Float32 m_rightVel;$/;"	m	class:CarmenNode	file:
+m_subVelCMD	src/carmen_driver_node.cpp	/^  	ros::Subscriber m_subVelCMD;$/;"	m	class:CarmenNode	file:
+main	src/carmen_driver_node.cpp	/^int main (int argc, char** argv) $/;"	f
+~CarmenNode	src/carmen_driver_node.cpp	/^		~CarmenNode()$/;"	f	class:CarmenNode
+main	src/carmen_example.cpp	/^int main(int argc, char *argv[]) $/;"	f
+print_usage	src/carmen_example.cpp	/^void print_usage() $/;"	f
+processCheck	src/carmen_example.cpp	/^void processCheck(void* para, UInt8 id, UInt16 channel, UInt8 status)$/;"	f
+processEncoder	src/carmen_example.cpp	/^void processEncoder(void* para, Float32 value[4])$/;"	f
+processEncoderAbs	src/carmen_example.cpp	/^void processEncoderAbs(void* para, Float32* lv, Float32* rv, Float32* ls, Float32* rs, Float32 elaspe)$/;"	f
+processMotion	src/carmen_example.cpp	/^void processMotion(void* para, UInt8 lp, UInt8 li, UInt8 ld, UInt8 rp, UInt8 ri, UInt8 rd)$/;"	f
+processPsd	src/carmen_example.cpp	/^void processPsd(void* para, Float32* value, SInt32 channel)$/;"	f
+processSonar	src/carmen_example.cpp	/^void processSonar(void* para, Float32* value, SInt32 channel)$/;"	f
+enumerate_ports	src/serial_example.cpp	/^void enumerate_ports()$/;"	f
+main	src/serial_example.cpp	/^int main(int argc, char **argv) {$/;"	f
+my_sleep	src/serial_example.cpp	/^void my_sleep(unsigned long milliseconds) {$/;"	f
+printHex	src/serial_example.cpp	/^inline void printHex(char *data, int length)$/;"	f
+print_usage	src/serial_example.cpp	/^void print_usage()$/;"	f
+run	src/serial_example.cpp	/^int run(int argc, char **argv)$/;"	f
+main	src/test_serial_read.cpp	/^int main(int argc, char *argv[])$/;"	f
+printHex	src/test_serial_read.cpp	/^inline void printHex(char *data, int length)$/;"	f
+main	src/tf_broadcaster.cpp	/^   int main(int argc, char** argv)$/;"	f
+ThreadFunction	src/threadexample.cpp	/^void ThreadFunction()$/;"	f
+main	src/threadexample.cpp	/^int main()$/;"	f

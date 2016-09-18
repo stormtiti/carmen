@@ -1,0 +1,9 @@
+build
+bin
+lib
+data
+bow
+loop
+build_eclipse
+resources
+*.swp

@@ -1,0 +1,8 @@
+include_directories(${CORE_DIRS})
+#message(STATUS "CORE_DIRS = ${CORE_DIRS}")
+aux_source_directory(. DEMO_CPP_LIST)
+foreach(demo_cpp ${DEMO_CPP_LIST})
+	get_filename_component(demo_name ${demo_cpp} NAME_WE)
+	add_executable(${demo_name} ${demo_cpp})
+ 	target_link_libraries(${demo_name} dloop)		
+endforeach(demo_cpp ${DEMO_CPP_LIST})

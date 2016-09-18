@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+	<machine name="hawaii" address="192.168.1.3" env-loader="/opt/ros/jade/env.sh" default="true"/>
+    <machine name="carmen" address="192.168.1.66" user="mpig" password="2" env-loader="/home/mpig/mpig_catkin_ws/devel/env.sh"/>
+	<node name="carmen_driver" pkg="carmen_driver" type="carmen_driver_node" output="screen" machine="carmen"/>
+	<include file="$(find carmen_driver)/launch/teleop_joystick.launch" />
+	<include file="$(find carmen_driver)/launch/include/keyboard_tele.launch.xml"/>	
+</launch>

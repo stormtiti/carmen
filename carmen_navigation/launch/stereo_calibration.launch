@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<launch>
+   <!--
+      Stereo calibration steps  
+      $ sudo apt-get install ros-jade-camera-calibration
+   -->
+
+    <machine name="hawaii" address="192.168.1.100" env-loader="/opt/ros/jade/env.sh" default="true"/>
+    <machine name="carmen" address="192.168.1.66" user="mpig" password="2" env-loader="/home/mpig/mpig_catkin_ws/devel/env.sh"/>
+     <!--Start bumblebee2 driver -->
+    <node pkg="camera1394stereo" type="camera1394stereo_node" name="camera1394stereo_node" output="screen" machine="carmen">
+      <param name="video_mode" value="format7_mode3" />
+      <param name="format7_color_coding" value="raw16" />
+      <param name="bayer_pattern" value="bggr" />
+      <param name="bayer_method" value="" />
+      <param name="stereo_method" value="Interlaced" />
+      <param name="auto_focus" value="2" />
+      <param name="auto_exposure" value="2" />
+    </node>   
+
+    <node pkg="camera_calibration" type="cameracalibrator.py" name="carmera_calibration" output="screen">
+      <remap from="left"    to="/stereo_camera/left/image_raw"/>
+      <remap from="right"    to="/stereo_camera/right/image_raw"/>
+      <remap from="left_camera" to="/stereo_camera/left"/>
+      <remap from="right_camera" to="/stereo_camera/right"/>
+      <param name="size" value="8x6" />
+      <param name="square" value="0.043" />
+    </node>
+ 
+
+</launch>

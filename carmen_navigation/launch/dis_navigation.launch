@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <machine name="hawaii" address="192.168.1.3"   env-loader="/opt/ros/jade/env.sh" default="true"/>
+  <machine name="carmen" address="192.168.1.66"  user="mpig" password="2" env-loader="/home/mpig/mpig_catkin_ws/devel/env.sh"/>
+
+
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find carmen_navigation)/maps/hall.yaml"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.0 0.0 0.0 0 0 0.0 /base_link /laser 100" machine="carmen"/>
+
+  <!--start hokuyo laser scanner node -->
+  <node name="hokuyo" pkg="hokuyo_node" type="hokuyo_node" respawn="false" output="screen" machine="carmen">
+      <!-- Set the port to connect to here -->
+      <param name="port" type="string" value="/dev/ttyACM0"/>
+      <!-- Starts up faster, but timestamps will be inaccurate. --> 
+      <param name="calibrate_time" type="bool" value="false"/>         
+  </node>
+
+  <!--start carmen driver node -->
+  <node name="carmen_driver" pkg="carmen_driver" type="carmen_driver_node" output="screen" machine="carmen">
+   <!-- <rosparam file="$(find carmen_driver)/config/driver.yaml" command="load" />  -->
+  </node>
+
+  <!--- Run AMCL -->
+  <include file="$(find carmen_navigation)/launch/include/amcl.launch" />
+
+  <!--- Run Move Base -->
+  <include file="$(find carmen_navigation)/launch/include/dis_move_base.launch" />
+  <!--remap from="/softbot/map" to="/map" -->
+	<!--start keyboard control node -->
+  <include file="$(find carmen_driver)/launch/include/keyboard_tele.launch.xml"/>
+  <include file="$(find carmen_driver)/launch/teleop_joystick.launch" />
+
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find carmen_sim)/launch/rviz/navigation.rviz"/> 
+</launch>

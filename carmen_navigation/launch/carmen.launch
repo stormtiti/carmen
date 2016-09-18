@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- This must be run on Carmen!!  -->
+  <node pkg="tf" type="static_transform_publisher" name="base_to_laser" args="0.0 0.0 0.0 0 0 0.0 /base_link /laser 100"/ >
+  <!--start hokuyo laser scanner node -->
+  <node name="hokuyo" pkg="hokuyo_node" type="hokuyo_node" respawn="false" output="screen">
+      <!-- Set the port to connect to here -->
+      <param name="port" type="string" value="/dev/ttyACM0"/>
+      <!-- Starts up faster, but timestamps will be inaccurate. --> 
+      <param name="calibrate_time" type="bool" value="false"/>         
+  </node>
+
+  <!--start carmen driver node -->
+  <node name="carmen_driver" pkg="carmen_driver" type="carmen_driver_node" output="screen">
+   <!-- <rosparam file="$(find carmen_driver)/config/driver.yaml" command="load" />  -->
+  </node>
+</launch>	

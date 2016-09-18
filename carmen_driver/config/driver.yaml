@@ -1,0 +1,40 @@
+# Carmen driver configure parameters
+
+### serial port configure
+port: "/dev/ttyS1"
+baudrate: 19200
+
+## carmen movment mode selection   
+# move_mode: 1    velocity closed-loop
+#            2    position closed-loop 
+# pid_mode   1    default pid
+#            2    online debug pid
+#            4    load pid    
+move_mode: 1
+pid_mode: 1
+
+## set wheel velocity 
+velocity:
+  left: 0.1
+  right: 0.1
+
+# set wheel distance
+distance:
+  left: 1
+  right: 1
+
+# set wheel acceleration
+acc:
+  left: 0.1
+  right: 0.1
+
+# set encoder mode 
+#       mode: 1      absolute encoder value
+#       
+encoder:
+  mode: 1
+  enable: 1
+pid:
+  p: 0
+  i: 0
+  d: 0
