@@ -111,19 +111,25 @@ void PathFollowTool::onGoalReached(const move_base_msgs::MoveBaseActionResult& a
 {
     if (goal_idx_ == 0)
         direction_ = forward;
-    else if(goal_idx_ == goal_list_size_)
+    else if(goal_idx_ == goal_list_size_-1)
         direction_ = backward;
 
 
     if (direction_ == forward)
     {
-        publishGoal(goal_list_.at(goal_idx_));
         goal_idx_++;
+        publishGoal(goal_list_.at(goal_idx_));
+
     }
     else if(direction_ == backward )
     {
         goal_idx_--;
-        publishGoal(goal_list_.at(goal_idx_));
+        GoalPose goal;
+        goal.x = goal_list_.at(goal_idx_).x;
+        goal.y = goal_list_.at(goal_idx_).y;
+        goal.theta = goal_list_.at(goal_idx_+1).theta + Ogre::Math::PI;
+
+        publishGoal(goal);
     }
 }
 
@@ -223,7 +229,6 @@ int PathFollowTool::processMouseEvent( ViewportMouseEvent& event )
     //    publish fake result topic
     result_pub_.publish(result);
     goal_list_size_ = goal_list_.size();
-    qDebug() << goal_list_size_;
     goal_idx_ = 0;
 
     flags |= (Render);
